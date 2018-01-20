@@ -1,3 +1,9 @@
+import re
+
+
+TOL = 64
+
+
 def cli():
     register_inch_decimal = 0
     while True:
@@ -9,7 +15,15 @@ def cli():
 
 
 def get_inch_decimal(cmd_as_text):
-    pass
+    # inch decimal [-]0+[.0*]
+    if re.fullmatch(r'-?\d+(\.\d*)?', cmd_as_text):
+        result = float(cmd_as_text)
+        result = round(TOL * result) / TOL
+        return result
+
+    # inch fraction [-]0+ 0+/0+ or [-]0+/0+
+
+    # ft inch fraction [-]0+-0+[ 0+/0+]
 
 
 def add(register_inch_decimal, opr_inch_decimal):
