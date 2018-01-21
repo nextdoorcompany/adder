@@ -112,3 +112,8 @@ def test_get_fraction(test_input, tolerance, expected):
 def test_get_ft_inch(test_input, tolerance, expected):
     result = calc.get_ft_inch(test_input, tolerance)
     assert result == expected
+
+
+def test_output():
+    result = calc.output(4.5, 64, 3, 8)
+    assert result == '4.5     ' + '4 1/2   ' + '0-4 1/2 '

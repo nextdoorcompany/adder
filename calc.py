@@ -47,7 +47,11 @@ def add(register_inch_decimal, opr_inch_decimal):
 
 
 def output(register_inch_decimal, output_tolerance, decimal_places, pad):
-    forms = get_result_forms(register_inch_decimal, output_tolerance)
+    as_decimal = get_decimal_at_places(register_inch_decimal,
+                                       output_tolerance, decimal_places)
+    as_fraction = get_fraction(register_inch_decimal, output_tolerance)
+    as_feet_in = get_ft_inch(register_inch_decimal, output_tolerance)
+    return '{:<{pad}}{:<{pad}}{:<{pad}}'.format(as_decimal, as_fraction, as_feet_in, pad=pad)
 
 
 def get_decimal_at_places(value, tolerance, places):
