@@ -1,36 +1,17 @@
+import pytest
 import calc
 
 
-def test_get_inch_decimal_zero():
-    result = calc.get_inch_decimal('0')
-    assert result == 0
-
-
-def test_get_inch_decimal_inch_negative():
-    result = calc.get_inch_decimal('-4.313')
-    assert result == -4.3125
-
-
-def test_get_inch_decimal_inch_positve():
-    result = calc.get_inch_decimal('17')
-    assert result == 17
-
-
-def test_get_inch_decimal_inch_precision():
-    result = calc.get_inch_decimal('33.047')
-    assert result == 33.046875
-
-
-def test_get_inch_decimal_inch_round_up():
-    result = calc.get_inch_decimal('0.993')
-    assert result == 1
-
-
-def test_get_inch_decimal_inch_round_down():
-    result = calc.get_inch_decimal('1.007')
-    assert result == 1
-
-
-def test_get_inch_decimal_inch_round_up_at_half():
-    result = calc.get_inch_decimal(str(127/128))
-    assert result == 1
+@pytest.mark.parametrize('test_input,tolerance,expected', [
+    ('0', 64, 0),
+    ('-4.313', 64, -4.3125),
+    ('17', 64, 17),
+    ('33.047', 64, 33.046875),
+    ('0.993', 64, 1),
+    ('1.007', 64, 1),
+    (str(127/128), 64, 1),
+    ('0.688', 2, 0.5),
+    ])
+def test_get_inch_decimal_decimal_input(test_input, tolerance, expected):
+    result = calc.get_inch_decimal(test_input, tolerance)
+    assert result == expected
