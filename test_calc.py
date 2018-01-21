@@ -32,3 +32,18 @@ def test_get_inch_decimal_decimal_input(test_input, tolerance, expected):
 def test_get_inch_decimal_fraction_input(test_input, tolerance, expected):
     result = calc.get_inch_decimal(test_input, tolerance)
     assert result == expected
+
+
+@pytest.mark.parametrize('test_input,tolerance,expected', [
+    ('3-0', 64, 36),
+    ('-3-0', 64, -36),
+    ('0-5 11/16', 64, 5.6875),
+    ('-0-5 11/16', 64, -5.6875),
+    ('7-4 3/8', 2, 88.5),
+    ('-4-4 1/64', 64, -52.015625),
+    ('3-6', 64, 42),
+    ('8-3', 64, 99),
+    ])
+def test_get_inch_decimal_foot_inch_input(test_input, tolerance, expected):
+    result = calc.get_inch_decimal(test_input, tolerance)
+    assert result == expected

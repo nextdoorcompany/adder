@@ -31,8 +31,14 @@ def get_inch_decimal(cmd_as_text, tolerance):
         result = whole + (numerator / denominator)
         return round_to_nearest(result, tolerance)
 
-
-    # ft inch fraction [-]0+-0+[ 0+/0+]
+    if re.fullmatch(r'-?\d+-\d+( \d+/\d+)?', cmd_as_text):
+        sep = cmd_as_text.find('-', 1)
+        feet = int(cmd_as_text[0:sep])
+        inch_text = cmd_as_text[sep+1:]
+        if cmd_as_text[0] == '-':
+            inch_text = '-' + inch_text
+        inches = get_inch_decimal(inch_text, tolerance)
+        return (feet * 12) + inches
 
 
 def add(register_inch_decimal, opr_inch_decimal):
