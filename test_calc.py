@@ -11,7 +11,24 @@ import calc
     ('1.007', 64, 1),
     (str(127/128), 64, 1),
     ('0.688', 2, 0.5),
+    ('.125', 64, 0.125),
+    ('-.125', 64, -0.125),
     ])
 def test_get_inch_decimal_decimal_input(test_input, tolerance, expected):
+    result = calc.get_inch_decimal(test_input, tolerance)
+    assert result == expected
+
+
+@pytest.mark.parametrize('test_input,tolerance,expected', [
+    ('0 19/32', 64, 0.59375),
+    ('-0 19/32', 64, -0.59375),
+    ('19/32', 64, 0.59375),
+    ('-19/32', 64, -0.59375),
+    ('7 11/16', 64, 7.6875),
+    ('-4 3/8', 64, -4.375),
+    ('5 1/64', 64, 5.015625),
+    ('9 3/8', 2, 9.5),
+    ])
+def test_get_inch_decimal_fraction_input(test_input, tolerance, expected):
     result = calc.get_inch_decimal(test_input, tolerance)
     assert result == expected
