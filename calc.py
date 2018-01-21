@@ -1,10 +1,11 @@
+from fractions import Fraction
 import re
 
 
-def cli(input_tolerance=64, output_tolerance=64):
+def cli(input_tolerance=64, output_tolerance=64, decimal_places=3, pad=12):
     register_inch_decimal = 0
     while True:
-        print(output(register_inch_decimal))
+        print(output(register_inch_decimal, output_tolerance, decimal_places, pad))
         cmd = input('>')
         # intercept commands
         opr_inch_decimal = get_inch_decimal(cmd, input_tolerance)
@@ -45,8 +46,40 @@ def add(register_inch_decimal, opr_inch_decimal):
     return register_inch_decimal + opr_inch_decimal
 
 
-def output(register_inch_decimal):
-    pass
+def output(register_inch_decimal, output_tolerance, decimal_places, pad):
+    forms = get_result_forms(register_inch_decimal, output_tolerance)
+
+
+def get_decimal_at_places(value, tolerance, places):
+    rounded_to_tolerance = round_to_nearest(value, tolerance)
+    rounded_to_places = round(rounded_to_tolerance, places)
+    return str(rounded_to_places)
+
+
+def get_fraction(value, tolerance):
+    rounded_to_tolerance = round_to_nearest(value, tolerance)
+    f = Fraction(abs(rounded_to_tolerance))
+    whole = f.numerator // f.denominator
+    numerator = f.numerator % f.denominator
+    fraction_text = '{}/{}'.format(numerator, f.denominator)
+    if rounded_to_tolerance < 0:
+        result = '-' + str(whole)
+    else:
+        result = str(whole)
+    if f.denominator != 1:
+        result = result + ' ' + fraction_text
+    return result
+
+
+def get_ft_inch(value, tolerance):
+    feet = abs(value) // 12
+    if value < 0:
+        result = '-'
+    else:
+        result = ''
+    result = result + str(int(feet)) + '-'
+    inches = abs(value) - (feet * 12)
+    return result + get_fraction(inches, tolerance)
 
 
 def round_to_nearest(value, tolerance):
