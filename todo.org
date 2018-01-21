@@ -1,5 +1,3 @@
-* click
 * guard against illegal tolerances
 * guard against illegal fractions
-* setting for decimal place output
-* use click print not print
+* test main loop

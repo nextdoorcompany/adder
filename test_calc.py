@@ -108,6 +108,7 @@ def test_get_fraction(test_input, tolerance, expected):
     (-52.015625, 64, '-4-4 1/64'),
     (42, 64, '3-6'),
     (99, 64, '8-3'),
+    (0, 64, '0-0'),
     ])
 def test_get_ft_inch(test_input, tolerance, expected):
     result = calc.get_ft_inch(test_input, tolerance)
@@ -119,7 +120,7 @@ def test_output():
     assert result == '4.5     ' + '4 1/2   ' + '0-4 1/2 '
 
 
-@pytest.mark.parametrize('cmd,register,expected',[
+@pytest.mark.parametrize('cmd,register,expected', [
     ('00', 47, 0),
     ('24.375', 47, 47),
     ('-32.016', 93, 93),

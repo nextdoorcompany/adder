@@ -1,12 +1,25 @@
 from fractions import Fraction
 import re
+import click
 
 
+@click.command()
+@click.argument('input_tolerance', type=click.INT, default=64)
+@click.argument('output_tolerance', type=click.INT, default=64)
+@click.argument('decimal_places', type=click.INT, default=3)
+@click.argument('pad', type=click.INT, default=12)
 def cli(input_tolerance=64, output_tolerance=64, decimal_places=3, pad=12):
     register_inch_decimal = 0
     while True:
-        print(output(register_inch_decimal, output_tolerance, decimal_places, pad))
-        cmd = input('>')
+        if register_inch_decimal == 0:
+            fore = 'white'
+            prompt = '>'
+        else:
+            fore = 'green'
+            prompt = '+'
+        click.secho(output(register_inch_decimal, output_tolerance,
+                           decimal_places, pad), fg=fore)
+        cmd = input(prompt)
         register_inch_decimal = process_cmd(cmd, register_inch_decimal)
         opr_inch_decimal = get_inch_decimal(cmd, input_tolerance)
         register_inch_decimal = add(register_inch_decimal, opr_inch_decimal)
@@ -57,7 +70,8 @@ def output(register_inch_decimal, output_tolerance, decimal_places, pad):
                                        output_tolerance, decimal_places)
     as_fraction = get_fraction(register_inch_decimal, output_tolerance)
     as_feet_in = get_ft_inch(register_inch_decimal, output_tolerance)
-    return '{:<{pad}}{:<{pad}}{:<{pad}}'.format(as_decimal, as_fraction, as_feet_in, pad=pad)
+    return '{:<{pad}}{:<{pad}}{:<{pad}}'.format(as_decimal, as_fraction,
+                                                as_feet_in, pad=pad)
 
 
 def get_decimal_at_places(value, tolerance, places):
