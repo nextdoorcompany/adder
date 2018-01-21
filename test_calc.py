@@ -47,3 +47,20 @@ def test_get_inch_decimal_fraction_input(test_input, tolerance, expected):
 def test_get_inch_decimal_foot_inch_input(test_input, tolerance, expected):
     result = calc.get_inch_decimal(test_input, tolerance)
     assert result == expected
+
+
+@pytest.mark.parametrize('op1,op2,expected', [
+    (2, 2, 4),
+    (2.5, 2, 4.5),
+    (-0.5, 2, 1.5),
+    (-6, -3, -9),
+    (0, 0, 0),
+    (-3, 5, 2),
+    (5, -3, 2),
+    (0.25, 0.375, 0.625),
+    (-0.25, -0.375, -0.625),
+    (0.25, -0.375, -0.125),
+    ])
+def test_add(op1, op2, expected):
+    result = calc.add(op1, op2)
+    assert result == expected

@@ -1,4 +1,3 @@
-* print should come before input
 * click
 * guard against illegal tolerances
 * guard against illegal fractions

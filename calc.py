@@ -4,11 +4,11 @@ import re
 def cli(input_tolerance=64, output_tolerance=64):
     register_inch_decimal = 0
     while True:
+        print(output(register_inch_decimal))
         cmd = input('>')
         # intercept commands
         opr_inch_decimal = get_inch_decimal(cmd, input_tolerance)
         register_inch_decimal = add(register_inch_decimal, opr_inch_decimal)
-        print(output(register_inch_decimal))
 
 
 def get_inch_decimal(cmd_as_text, tolerance):
@@ -42,7 +42,7 @@ def get_inch_decimal(cmd_as_text, tolerance):
 
 
 def add(register_inch_decimal, opr_inch_decimal):
-    pass
+    return register_inch_decimal + opr_inch_decimal
 
 
 def output(register_inch_decimal):
