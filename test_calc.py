@@ -117,3 +117,14 @@ def test_get_ft_inch(test_input, tolerance, expected):
 def test_output():
     result = calc.output(4.5, 64, 3, 8)
     assert result == '4.5     ' + '4 1/2   ' + '0-4 1/2 '
+
+
+@pytest.mark.parametrize('cmd,register,expected',[
+    ('00', 47, 0),
+    ('24.375', 47, 47),
+    ('-32.016', 93, 93),
+    ('0', 22.875, 22.875),
+    ])
+def test_process_cmd_clear(cmd, register, expected):
+    result = calc.process_cmd(cmd, register)
+    assert result == expected

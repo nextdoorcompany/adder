@@ -7,9 +7,15 @@ def cli(input_tolerance=64, output_tolerance=64, decimal_places=3, pad=12):
     while True:
         print(output(register_inch_decimal, output_tolerance, decimal_places, pad))
         cmd = input('>')
-        # intercept commands
+        register_inch_decimal = process_cmd(cmd, register_inch_decimal)
         opr_inch_decimal = get_inch_decimal(cmd, input_tolerance)
         register_inch_decimal = add(register_inch_decimal, opr_inch_decimal)
+
+
+def process_cmd(cmd, register_inch_decimal):
+    if cmd == '00':
+        return 0
+    return register_inch_decimal
 
 
 def get_inch_decimal(cmd_as_text, tolerance):
